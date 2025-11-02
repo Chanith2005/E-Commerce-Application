@@ -1,15 +1,17 @@
-public class Payment {
+public abstract class Payment implements Payable {
 
     private double amount;
     private String currency;
     private String status;
+    private String referenceId;
 
     public Payment() {}
 
-    public Payment(double amount, String currency, String status) {
+    public Payment(double amount, String currency, String status, String referenceId) {
         this.amount = amount;
         this.currency = currency;
         this.status = status;
+        this.referenceId = referenceId;
     }
 
     public double getAmount() {
@@ -36,9 +38,12 @@ public class Payment {
         this.status = status;
     }
 
-    public void processPayment() {
-        System.out.println("Processing generic payment");
+    @Override
+    public String getReference() {
+        return this.referenceId;
     }
+
+    abstract void processPayment();
 
     public String generateReceipt() {
         return "Receipt for amount : " + this.amount + ", currency : " + this.currency;
